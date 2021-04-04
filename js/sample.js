@@ -90,7 +90,6 @@ function CellMembrane (target,block,player){
 
     if(block){
       $(target).css("box-shadow","1px 9px 34px -10px rgba(255,204,0,0.52)");
-      console.log(target);
     }
   //when chosen next player will be blocked
   //click card set block to true
@@ -223,7 +222,7 @@ function Cystosol (targets,callBack){
   for (let x of targets) {
     if($(x).attr("id")!="deck"&&!($(x).hasClass("not"))){
       $(x).css("cursor","pointer");
-      $(x).css("box-shadow","1px 9px 34px -10px rgba(48,220,242,0.52)");
+      $(x).css("box-shadow","1px 9px 34px -10px rgba(234,112,250,0.52)");
       $(x).click((event)=>{
         $(targets).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
         removeClick(event.target,targets,callBack);

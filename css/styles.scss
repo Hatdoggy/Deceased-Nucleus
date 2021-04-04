@@ -53,6 +53,9 @@ body{
       padding-bottom: 5px;
     }
   }
+  &-top{
+    padding-top: 70px!important;
+  }
   &-5{
     padding: 5px;
   }
@@ -64,6 +67,9 @@ body{
   }
   &-20{
     padding: 20px;
+  }
+  &-35{
+    padding: 35px;
   }
 }
 
@@ -224,7 +230,7 @@ body{
       margin-top: 0;
     }
     &-10{
-      margin-top: 10%;
+      margin-top: 10%!important;
     }
     &-15{
       margin-top: 15%;
@@ -403,6 +409,7 @@ body{
   }
 }
 
+
 #logo{
   width: 16px;
   height: 100%;
@@ -442,6 +449,13 @@ body{
     padding: 5px;
     &:hover{
       color:map-get($text,"note");
+      transition: 0.3s;
+    }
+  }
+  #reset{
+    color:map-get($text,"main");
+    &:hover{
+      color: map-get($text,"danger");
       transition: 0.3s;
     }
   }
@@ -491,4 +505,13 @@ body{
     text-decoration: none;
     cursor: pointer;
   }
+}
+
+html{
+    scrollbar-width:none;
+}
+
+#info-cont,#curUser{
+  scrollbar-width:thin;
+    scroll-behavior: smooth;
 }

@@ -6,23 +6,26 @@
     <link rel="stylesheet" href="./css/styles.min.css">
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="module" defer src="./js/main.js"></script>
+    <script type="module" defer src="./js/web.js"></script>
+    <script type="module" src="./js/sly.min.js"></script>
   </head>
   <body>
 
     <nav class="flex flex-flx-row flex-ai-ce bg-lg p-5 shadow pos-fix w-100">
       <div class="flex flex-ai-ce margin-left-1">
         <img src="./Images/BackOfCard.png" id="logo"/>
-        <h1 class="font-head">Deceased Nucleus</h1>
+        <h1 class="font-head" id="title">Deceased Nucleus</h1>
       </div>
       <div class="flex margin-left-auto margin-right-0 font-desc margin-right-2" id="navi">
-        <a href="#">About</a>
-        <a href="#">How to play</a>
-        <a href="#">Cards</a>
-        <a href="#">Play the Game</a>
+        <a href="#" id="about">About</a>
+        <a href="#" id="htp">How to play</a>
+        <a href="#" id="overview">Cards</a>
+        <a href="#" id="play">Play the Game</a>
+        <a href="#" id="reset">Reset Game</a>
       </div>
     </nav>
 
-  <section class="flex">
+  <section class="flex"  id="aboutPart">
 
   <article class="card-cont flex margin-2 width-40 margin-left-5 margin-top-5">
   </article>
@@ -43,7 +46,7 @@
 
 </section>
 
-<section class="flex flex-flx-col p-20 margin-2">
+<section class="flex flex-flx-col p-35 margin-2 margin-top-10 p-top" id="howto">
 
   <div class="flex w-100 flex-jc-ce">
       <h1 class="font-head size-l">HOW TO PLAY</h1>
@@ -84,14 +87,14 @@
 
 </section>
 
-<section class="flex flex-flx-col p-20 margin-2">
+<section class="flex flex-flx-col p-35 margin-2 " id="aboutCards">
 
   <div class="flex flex-flx-col w-100 flex-jc-ce flex-ai-ce">
       <h1 class="font-head size-l">LEARN ABOUT THE CARDS</h1>
       <p class="font-desc w-30 txt-center">There are 6 types of cards Defend, Attack, Shuffle, Thief, Seek and Game Over Card </p>
   </div>
 
-  <div class="flex w-100 margin-top-5 desc-cont">
+  <div class="flex w-100 margin-top-5 desc-cont" id="info-cont" data-scroll>
     <div class="flex flex-flx-col flex-jc-ce flex-ai-ce card-info txt-center shadow p-20 margin-right-2">
       <div class="flex">
         <img src="./Images/Deceased Nucleus.png" alt="Deceased Nucleus" class="margin-bot-5">
@@ -157,9 +160,9 @@
 
 </section>
 
-<section class="flex flex-jc-ce flex-ai-ce margin-top-15">
+<section class="flex flex-jc-ce flex-ai-ce margin-top-25" id="ready">
   <button type="button" name="button" class="btn margin-25" id="readyBtn" >READY</button>
-  <div class="w-100 flex flex-flx-col flex-ai-ce flex-jc-ce pos-rel max-height" id="board">
+  <div class="w-100 flex flex-flx-col flex-ai-ce flex-jc-ce pos-rel max-height margin-top-10" id="board">
     <img src="./Images/BackOfCard.png" alt="BackOfCard" class="card margin-top-2" id="deck"/>
 
     <div class="user-card flex p-20 flex-jc-ce desc-cont shadow margin-top-2 w-100 max-w max-h overflow-scrollY" id="curUser">
@@ -180,11 +183,13 @@
       <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card margin-left-2" />
       <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card margin-left-2" />
     </div>
-      <p class="font-desc flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-r-text not">Card Count <span id="ai-3" class="bold"></span></p>
-      <p class="font-desc flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-l-text not">Card Count <span id="ai-1" class="bold"></span></p>
-      <p class="font-desc flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-d-text not">Card Count <span id="ai-2" class="bold"></span></p>
+      <p class="font-desc flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-r-text not"><span id="ai-3" class="bold"></span></p>
+      <p class="font-desc flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-l-text not"><span id="ai-1" class="bold"></span></p>
+      <p class="font-desc flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-d-text not"><span id="ai-2" class="bold"></span></p>
   </div>
 </section>
+
+
 
 <div id="myModal" class="modal">
   <div class="modal-content">
@@ -196,7 +201,6 @@
 
 <div id="lose" class="modal">
   <div class="modal-content">
-    <span class="close">&times;</span>
     <div class="flex flex-jc-ce p-20 font-desc" id="message"></div>
   </div>
 </div>

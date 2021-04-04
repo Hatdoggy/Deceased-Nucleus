@@ -15,6 +15,11 @@ let playAgain = false;
 let block = false;
 let selected = false;
 let userBlock = false;
+let defeat = {
+  one:false,
+  two:false,
+  three:false
+};
 
 let ret = {
     value: '',
@@ -95,7 +100,6 @@ const cytoSee = (target,targets,modal)=>{
 };
 
 const handler = (clicked,targets,curPlayer)=>{
-  console.log(curPlayer);
   clicked = clicked.replace(/\s+/g, '');
   switch (clicked) {
     case "Mitochondria":
@@ -111,6 +115,7 @@ const handler = (clicked,targets,curPlayer)=>{
         }else{
           ndx=func.remove(curPlayer,get,"Mitochondria");
           curPlayer.splice(ndx,1);
+          console.log(curPlayer);
           func.Mitochondria(targets,curPlayer,ai,ret,false);
         }
         $("#deck").click(draw);
@@ -130,7 +135,6 @@ const handler = (clicked,targets,curPlayer)=>{
           console.log("Cell Membrane");
           $("#deck").unbind();
           if(curPlayer===user){
-            console.log("You went here");
             block = true;
             user.splice(func.remove(user,get,"Cell Membrane"),1);
             func.roughDisplay(user);
@@ -140,7 +144,7 @@ const handler = (clicked,targets,curPlayer)=>{
             userBlock = true;
             curPlayer.splice(func.remove(curPlayer,get,"Cell Membrane"),1);
             func.CellMembrane(curUser,userBlock,curPlayer);
-            $("#curUser").children().unbind();
+            $(curUser).children().unbind();
           }
          $("#deck").click(draw);
          break;
@@ -184,7 +188,6 @@ const handler = (clicked,targets,curPlayer)=>{
           $("#deck").click(draw);
          break;
     case "Ribosome":
-          console.log(targets);
           if(Array.isArray(func.ribo(curPlayer))){
           $("#deck").unbind();
             for(let x=0;x<2;x++){
@@ -208,10 +211,12 @@ const handler = (clicked,targets,curPlayer)=>{
           console.log("Cytosol");
           if(curPlayer===user){
             $("#deck").unbind();
+            console.log($("#deck").attr("src","./Images/Cytosol.png"));
             user.splice(func.remove(user,get,"Cytosol"),1);
             func.Cystosol(targets,function(target){
               cytoSee(target,targets,()=>{
                   $("#myModal").fadeIn("fast");
+                  $("#deck").attr("src","./Images/BackOfCard.png");
               });
             });
             func.roughDisplay(user);
@@ -232,15 +237,7 @@ $(".close").click(()=>{
 
 const sample = ()=>{
   if(userBlock){
-    if(user.length == 0){
-      $(curUser).children().append(`
-        <h2 class="font-desc">No Cards in hand</h2>`);
-    }
     turnDelay();
-    $("#curUser").children().click((e)=>{
-      let siblings = $(e.target).parent().parent().siblings();
-      handler($(e.target).attr("alt"),siblings,user);
-    });
   }else{
     $("#curUser").children().click((e)=>{
       let siblings = $(e.target).parent().parent().siblings();
@@ -304,32 +301,74 @@ const reset = ()=>{
   }
 };
 
-const mes = (player)=>{
+const mes = ()=>{
   $("#lose").fadeIn("fast");
   $("#message").append(`
-      <h1 class="font-desc flex p-20 flex-jc-ce">${player} Lost</h1>
+      <h1 class="font-desc flex p-20 flex-jc-ce">You Lost</h1>
   `);
 }
 
+const restart = ()=>{
+
+      user = [];
+      ai = {
+        one:[],
+        two:[],
+        three:[]
+      };
+      defeat = {
+        one:false,
+        two:false,
+        three:false
+      }
+      $("#deck").attr("src","./Images/BackOfCard.png");
+      $("#curUser").empty();
+      setTimeout(()=>{
+        reset();
+      },1000);
+      playAgain = true;
+      block = false;
+      upd();
+      $("#board").fadeOut("slow");
+      $("#readyBtn").show("slow");
+      $("#reset").hide("fast");
+      $("#lose").fadeOut("fast");
+};
+
 /*gameOver() displays the game over modal when game is over*/
 
-const gameOver = (player)=>{
-  if(user.length!=0){
-    user = [];
-    ai = {
-      one:[],
-      two:[],
-      three:[]
-    };
-    $("#deck").attr("src","./Images/BackOfCard.png");
-    $("#curUser").empty();
-    setTimeout(()=>{
-      reset();
-    },1000);
-    playAgain = true;
-    block = false;
-    mes(player);
-    upd();
+const gameOver = (player,cur)=>{
+  console.log(player);
+  if(user.length!=0&&player==="user"){
+    $("#reset").css("color","#f35230");
+    mes();
+    reset();
+  }else{
+    switch (cur) {
+      case ai.one:
+        defeat.one=true;
+        ai.one=[];
+        upd(ai.one);
+        $("#ai-1").text("LOST");
+        $("#ai-1").hide("slow");
+        break;
+      case ai.two:
+        defeat.two=true;
+        ai.two=[];
+        upd(ai.two);
+        $("#ai-2").text("LOST");
+        $("#ai-2").hide("slow");
+        break;
+      case ai.three:
+        defeat.three=true;
+        ai.three=[];
+        upd(ai.three);
+        $("#ai-3").text("LOST");
+        $("#ai-3").hide("slow");
+        break;
+      default:
+        console.log("Not found");
+    }
   }
 }
 
@@ -385,7 +424,7 @@ const check = (e,player)=>{
       let checkVal = get(val)[0];
       return(checkVal === "Lysosome" || checkVal === "SmoothER")
     });
-    sample!=-1?decNucleus(true,sample,player):gameOver(cur);
+    sample!=-1?decNucleus(true,sample,player):gameOver(cur,player);
     upd(player);
   }else{
     player.push(info[e]);
@@ -420,40 +459,44 @@ const turnDelay = ()=>{
   //set delay per turn
   //box shadow is green for current player
   //wait for current player to finish
+
   if(!playAgain){
     setTimeout(()=>{
       if(userBlock){
-        console.log("USER BLOCK IS TRUE");
         userBlock=false;
+        $(curUser).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52)");
       }
       $("#deck").unbind();
       $("#curUser").children().unbind();
-      if(block == false){
+      if(!block&&!defeat.one){
         cur($("#player2"));
         check(generate("player2"),ai.one);
-        turn(ai.one);
+        // turn(ai.one);
       }else{
         block = false;
-        $(curUser).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52)");
+        defeat.one&&$("#player-2").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
       }
       setTimeout(()=>{
         res($("#player2"));
-          if(block == false){
+          if(!defeat.two){
           cur($("#player3"));
           check(generate("player3"),ai.two);
-          turn(ai.two);
+          // turn(ai.two);
           }else{
             block = false;
+            defeat.two&&$("#player-3").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
           }
             setTimeout(()=>{
               res($("#player3"));
-              if(block == false){
+              if(!defeat.three){
               cur($("#player4"));
               check(generate("player4"),ai.three);
                 turn(ai.three);
                 }else{
                   block = false;
-                }
+                  defeat.three&&$("#player-4").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
+                  // userBlock&&sample();
+              }
                 setTimeout(()=>{
                   res($("#player4"));
                   sample();
@@ -469,6 +512,7 @@ const turnDelay = ()=>{
 }
 
 const draw = ()=>{
+
   if(playAgain===true){
     round = 0;
     user = [];
@@ -558,10 +602,12 @@ info.map((e)=>{
 });
 
 board.hide();
+$("#reset").hide();
 ready.click(()=>{
   ready.hide();
-  board.show();
+  board.fadeIn();
+  $("#reset").fadeIn();
+  $("#reset").click(restart);
 });
-
 
 })
