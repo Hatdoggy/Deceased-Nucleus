@@ -21,13 +21,13 @@ let defeat = {
   three:false
 };
 
-const suc = new Audio('../Sounds/Win.wav');
-const def = new Audio('../Sounds/Lost.wav');
-const cyt = new Audio('../Sounds/Cytosol.mp3');
-const nuc = new Audio('../Sounds/Nucleus.mp3');
-const mit = new Audio('../Sounds/Mito.mp3');
-const ran = new Audio('../Sounds/Random.mp3');
-const rib = new Audio('../Sounds/ribo.mp3');
+const suc = new Audio('https://dl.dropbox.com/s/05oyx1mvawozwdj/Win.wav');
+const def = new Audio('https://dl.dropbox.com/s/c85w733ud3rxxna/Lost.wav');
+const cyt = new Audio('https://dl.dropbox.com/s/168iw1gosdvelx7/Cytosol.mp3');
+const nuc = new Audio('https://dl.dropbox.com/s/dg4xvl20omuigr6/Nucleus.mp3');
+const mit = new Audio('https://dl.dropbox.com/s/jmvt8udz5otuk7b/Mito.mp3');
+const ran = new Audio('https://dl.dropbox.com/s/fktip0t46fwfs55/Random.mp3');
+const rib = new Audio('https://dl.dropbox.com/s/lufn8q5xjndz3g7/ribo.mp3');
 
 
 let ret = {
