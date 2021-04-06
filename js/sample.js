@@ -1,32 +1,5 @@
-/*
 
-  COMPLETED
-  Mitochondria
-  Animate Cutting deck
-  Centriole
-  ribosomes
-  Cytoskeleton
-  Cell Membrane
-  Cytosol
-  add Card count for each player
-  Cell membrane (tarunga ang pag block sa sunod turn sa opponent)
-  Current user Glow
-  Turn per player
-
-  To be debugged:
-  RoughER (Gameover sequence)
-  Golgi Apparatus (Gameover sequence)
-  Gameover sequence sa alert
-  Cytoskeleton bug for opponent
-
-  TO DO LIST!
-  Opponents turn
-  If hand is empty place text else place user cards
-  Remove ability to click when it is opponent's turn
-
-*/
-
-const info = ["./Images/SmoothER.png","./Images/Lysosome.png","./Images/Golgi Apparatus.png","./Images/Centriole.png","./Images/RoughER.png","./Images/Ribosome.png","./Images/Cell Membrane.png","./Images/Cytosol.png","./Images/Mitochondria.png","./Images/Cytoskeleton.png","./Images/Deceased Nucleus.png","./Images/BackOfCard.png"];
+const info = ["./Images/SmoothER.jpg","./Images/Lysosome.jpg","./Images/Golgi Apparatus.jpg","./Images/Centriole.jpg","./Images/RoughER.jpg","./Images/Ribosome.jpg","./Images/Cell Membrane.jpg","./Images/Cytosol.jpg","./Images/Mitochondria.jpg","./Images/Cytoskeleton.jpg","./Images/Deceased Nucleus.jpg","./Images/BackOfCard.jpg"];
 
 export default info;
 
@@ -38,7 +11,7 @@ const shuffle = ()=>{
   return new Promise((x)=>{
     $("#deck").attr("src","./Images/CardGIF.gif");
     setTimeout(()=>{
-      $("#deck").attr("src","./Images/BackOfCard.png");
+      $("#deck").attr("src","./Images/BackOfCard.jpg");
     },2500);
   });
 
@@ -47,7 +20,7 @@ const shuffle = ()=>{
 const cut = ()=>{
     $("#deck").attr("src","./Images/Cut.gif");
     setTimeout(()=>{
-      $("#deck").attr("src","./Images/BackOfCard.png");
+      $("#deck").attr("src","./Images/BackOfCard.jpg");
     },2500);
 };
 
@@ -62,7 +35,7 @@ const remove = (player,get,card)=>{
 
 function Mitochondria (targets,user,ai,ret,player){
 
-  $("#deck").attr("src","./Images/Mitochondria.png");
+  $("#deck").attr("src","./Images/Mitochondria.jpg");
   if(player){//check if user ang click
     targets.map((key,value)=>{
       if(key!=0&&!($(value).hasClass("not"))){
@@ -72,7 +45,7 @@ function Mitochondria (targets,user,ai,ret,player){
           $(value).siblings().css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
           $(value).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
           ret.testVar = $(this).attr("id");
-          $("#deck").attr("src","./Images/BackOfCard.png");
+          $("#deck").attr("src","./Images/BackOfCard.jpg");
         });
       }
     });
@@ -81,6 +54,7 @@ function Mitochondria (targets,user,ai,ret,player){
       $(x).css("box-shadow","1px 9px 34px -10px rgba(240,166,48,0.8) ");
       setTimeout(()=>{
         $(x).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
+        $("#deck").attr("src","./Images/BackOfCard.jpg");
       },1000)
       ret.testVar =$(x).attr("id");
   }
@@ -100,7 +74,6 @@ function CellMembrane (target,block,player){
 function Cytoskeleton (targets,check,gen,ai,cur,user){
   //generate random cards for every opponent
   let ctr = 0;
-  console.log(ai);
   for (let x of targets) {
     if($(x).attr("id")!="deck"&&!($(x).hasClass("not"))){
       $(x).css("box-shadow","1px 9px 34px -10px rgba(252,79,56,0.8)");
@@ -108,13 +81,11 @@ function Cytoskeleton (targets,check,gen,ai,cur,user){
   }
 
   if(cur === "user"){
-    console.log("USER");
     for (let x in ai) {
       check(gen(players[ctr]),ai[x]);
       ctr++;
     }
   }else{
-    console.log("You went here");
     for (let x in ai) {
       if(cur!=ai[x]){
         check(gen(players[ctr]),ai[x]);
@@ -122,7 +93,6 @@ function Cytoskeleton (targets,check,gen,ai,cur,user){
       }
     }
     check(gen("user"),user);
-    console.log(user);
   }
 
   shuffle();

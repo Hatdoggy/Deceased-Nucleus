@@ -21,6 +21,15 @@ let defeat = {
   three:false
 };
 
+const suc = new Audio('../Sounds/Win.wav');
+const def = new Audio('../Sounds/Lost.wav');
+const cyt = new Audio('../Sounds/Cytosol.mp3');
+const nuc = new Audio('../Sounds/Nucleus.mp3');
+const mit = new Audio('../Sounds/Mito.mp3');
+const ran = new Audio('../Sounds/Random.mp3');
+const rib = new Audio('../Sounds/ribo.mp3');
+
+
 let ret = {
     value: '',
     get testVar() {
@@ -110,12 +119,14 @@ const handler = (clicked,targets,curPlayer)=>{
             if(ndx!=-1){
               user.splice(ndx,1);
               display();
+              mit.play();
             func.Mitochondria(targets,user,ai,ret,true);
           }
         }else{
           ndx=func.remove(curPlayer,get,"Mitochondria");
           curPlayer.splice(ndx,1);
           console.log(curPlayer);
+          mit.play();
           func.Mitochondria(targets,curPlayer,ai,ret,false);
         }
         $("#deck").click(draw);
@@ -124,6 +135,7 @@ const handler = (clicked,targets,curPlayer)=>{
           console.log("Centriole");
           $("#deck").unbind();
           curPlayer.splice(func.remove(curPlayer,get,"Centriole"),1);
+          ran.play();
           func.cut();
           if(curPlayer==user){
             func.roughDisplay(user);
@@ -151,6 +163,7 @@ const handler = (clicked,targets,curPlayer)=>{
     case "Cytoskeleton":
           $("#deck").unbind();
           curPlayer.splice(func.remove(curPlayer,get,"Cytoskeleton"),1);
+          cyt.play();
           if(curPlayer==user){
             func.Cytoskeleton(targets,check,generate,ai,"user");
           }else{
@@ -165,6 +178,7 @@ const handler = (clicked,targets,curPlayer)=>{
           console.log("Golgi");
           $("#deck").unbind();
             func.GolgiApparatus(curPlayer,get,function(retVal){
+              ran.play();
               curPlayer.splice(retVal,1);
               check(generate("curPlayer"),curPlayer);
 
@@ -189,6 +203,7 @@ const handler = (clicked,targets,curPlayer)=>{
          break;
     case "Ribosome":
           if(Array.isArray(func.ribo(curPlayer))){
+          rib.play();
           $("#deck").unbind();
             for(let x=0;x<2;x++){
               curPlayer.splice(func.remove(curPlayer,get,"Ribosome"),1);
@@ -201,22 +216,24 @@ const handler = (clicked,targets,curPlayer)=>{
               console.log("Check this: "+find);
               checkPlayer(find,curPlayer);
               $("#deck").click(draw);
+              upd();
             });
-            upd();
+
           }else{
             console.log("NO");//set error or notify user nga kuwang
           }
          break;
     case "Cytosol":
-          console.log("Cytosol");
+
           if(curPlayer===user){
             $("#deck").unbind();
-            console.log($("#deck").attr("src","./Images/Cytosol.png"));
+
             user.splice(func.remove(user,get,"Cytosol"),1);
             func.Cystosol(targets,function(target){
               cytoSee(target,targets,()=>{
+                  cyt.play();
                   $("#myModal").fadeIn("fast");
-                  $("#deck").attr("src","./Images/BackOfCard.png");
+                  $("#deck").attr("src","./Images/BackOfCard.jpg");
               });
             });
             func.roughDisplay(user);
@@ -295,17 +312,22 @@ const reset = ()=>{
   for(let x = 0 ; x<3;x++){
     $("#curUser").append(`
       <div class="">
-        <img src="./Images/BackOfCard.png" alt="BackOfCard.png" class="flex play-card p-right-5 p-bot-5" />
+        <img src="./Images/BackOfCard.jpg" alt="BackOfCard.jpg" class="flex play-card p-right-5 p-bot-5" />
       </div>
     `);
   }
 };
 
-const mes = ()=>{
-  $("#lose").fadeIn("fast");
-  $("#message").append(`
-      <h1 class="font-desc flex p-20 flex-jc-ce">You Lost</h1>
-  `);
+let end = false;
+
+const mes = (res)=>{
+  if(!end){
+    $("#lose").fadeIn("fast");
+    res?suc.play():def.play();
+    $("#message").append(`
+        <h1 class="font-desc flex p-20 flex-jc-ce">You ${res?"Won":"Lost"}</h1>
+    `);
+  }
 }
 
 const restart = ()=>{
@@ -321,7 +343,8 @@ const restart = ()=>{
         two:false,
         three:false
       }
-      $("#deck").attr("src","./Images/BackOfCard.png");
+      $("#message").empty();
+      $("#deck").attr("src","./Images/BackOfCard.jpg");
       $("#curUser").empty();
       setTimeout(()=>{
         reset();
@@ -329,19 +352,32 @@ const restart = ()=>{
       playAgain = true;
       block = false;
       upd();
+      round=0;
       $("#board").fadeOut("slow");
       $("#readyBtn").show("slow");
       $("#reset").hide("fast");
       $("#lose").fadeOut("fast");
 };
 
+const win = ()=>{
+  let x=0;
+  for (const [key, value] of Object.entries(defeat)) {
+    if(value){
+      x++;
+    }
+  }
+  if(x==3){
+    mes(true);
+  }
+}
+
 /*gameOver() displays the game over modal when game is over*/
 
 const gameOver = (player,cur)=>{
-  console.log(player);
+
   if(user.length!=0&&player==="user"){
     $("#reset").css("color","#f35230");
-    mes();
+    mes(false);
     reset();
   }else{
     switch (cur) {
@@ -369,6 +405,7 @@ const gameOver = (player,cur)=>{
       default:
         console.log("Not found");
     }
+    win();
   }
 }
 
@@ -401,11 +438,12 @@ const upd = (player)=>{
 const decNucleus = (stat,def,cur)=>{
   if(user.length!=0){
     if(stat == false){
-      $("#deck").attr("src","./Images/Deceased Nucleus.png");
+      nuc.play();
+      $("#deck").attr("src","./Images/Deceased Nucleus.jpg");
     }else{
     cur.splice(def,1);
       setTimeout(()=>{
-        $("#deck").attr("src","./Images/BackOfCard.png");
+        $("#deck").attr("src","./Images/BackOfCard.jpg");
       },1500);
     }
   }
@@ -471,7 +509,7 @@ const turnDelay = ()=>{
       if(!block&&!defeat.one){
         cur($("#player2"));
         check(generate("player2"),ai.one);
-        // turn(ai.one);
+        turn(ai.one);
       }else{
         block = false;
         defeat.one&&$("#player-2").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
@@ -481,7 +519,7 @@ const turnDelay = ()=>{
           if(!defeat.two){
           cur($("#player3"));
           check(generate("player3"),ai.two);
-          // turn(ai.two);
+          turn(ai.two);
           }else{
             block = false;
             defeat.two&&$("#player-3").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
@@ -495,7 +533,6 @@ const turnDelay = ()=>{
                 }else{
                   block = false;
                   defeat.three&&$("#player-4").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
-                  // userBlock&&sample();
               }
                 setTimeout(()=>{
                   res($("#player4"));
@@ -521,6 +558,9 @@ const draw = ()=>{
       two:[],
       three:[]
     };
+      $("#ai-1").show();
+      $("#ai-2").show();
+      $("#ai-3").show();
     upd();
     playAgain = false;
   }

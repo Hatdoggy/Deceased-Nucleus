@@ -5,6 +5,10 @@ const play = $("#play");
 
 $(document).ready(()=>{
 
+  AOS.init({
+    duration: 1200,
+  })
+
   $(about).click(function() {
     $('html,body').animate({
         scrollTop: $("#aboutPart").offset().top},

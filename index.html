@@ -7,13 +7,14 @@
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="module" defer src="./js/main.js"></script>
     <script type="module" defer src="./js/web.js"></script>
-    <script type="module" src="./js/sly.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   </head>
-  <body>
+<body>
 
-    <nav class="flex flex-flx-row flex-ai-ce bg-lg p-5 shadow pos-fix w-100">
+    <nav class="flex flex-flx-row flex-ai-ce bg-lg p-5 shadow pos-fix w-100" data-aos="fade-down">
       <div class="flex flex-ai-ce margin-left-1">
-        <img src="./Images/BackOfCard.png" id="logo"/>
+        <img src="./Images/BackOfCard.jpg" id="logo"/>
         <h1 class="font-head" id="title">Deceased Nucleus</h1>
       </div>
       <div class="flex margin-left-auto margin-right-0 font-desc margin-right-2" id="navi">
@@ -30,15 +31,14 @@
   <article class="card-cont flex margin-2 width-40 margin-left-5 margin-top-5">
   </article>
 
-  <article class="flex flex-flx-col margin-2 width-40 margin-right-5 flex-jc-ce flex-ai-e">
+  <article class="flex flex-flx-col margin-2 width-40 margin-right-5 flex-jc-ce flex-ai-e" data-aos="zoom-in">
     <div class="txt txt-right w-80">
       <h3 class="font-head size-l">ABOUT THE GAME</h3>
-      <p class="font-desc margin-top-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+      <p class="font-desc margin-top-5">Deceased Nucleus takes inspiration from the game Exploding Kittens. This game incorporates science terms into the game for you to learn while playing</p>
     </div>
 
     <div class="txt txt-right w-80 margin-top-5">
-      <h3 class="font-head size-l">About the Game</h3>
-      <p class="font-desc margin-top-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+      <p class="font-desc margin-top-5">This game is a turn based card game rotating clockwise where you do your best to avoid getting a Deceased Nucleus</p>
     </div>
 
   </article>
@@ -52,11 +52,11 @@
       <h1 class="font-head size-l">HOW TO PLAY</h1>
   </div>
 
-  <div class="flex w-50 margin-top-2 margin-bot-2 bg-lg shadow">
+  <div class="flex w-50 margin-top-2 margin-bot-2 bg-lg shadow" data-aos="fade-right">
     <div class="cont flex flex-ai-ce w-100 margin-left-0 p-20">
       <div class="flex flex-flx-col">
         <h3 class="txt-main font-head size-m">START OF GAME</h3>
-        <p class="txt-main font-desc margin-top-5 margin-bot-5">Click the READY button to start the game, you will be dealt 3
+        <p class="txt-main font-desc margin-top-5 margin-bot-5">Click the READY button to start the game, you will be dealt 4
             starting cards for the current game</p>
         <p class="txt-info font-desc margin-bot-2">First player to move is random</p>
         <p class="txt-success font-desc">Each player has 1 starting lysosome</p>
@@ -65,12 +65,12 @@
     </div>
   </div>
 
-  <div class="flex w-100  flex-jc-e ">
+  <div class="flex w-100  flex-jc-e " data-aos="fade-left">
     <div class="flex bg-lg flex-jc-ce shadow w-80">
       <div class="flex p-2 margin-2">
-        <img src="./Images/Deceased Nucleus.png" alt="Deceased Nucleus" class="card margin-left-2"/>
-        <img src="./Images/Lysosome.png" alt="Lysosome" class="card margin-left-2" />
-        <img src="./Images/SmoothER.png" alt="Smooth ER" class="card margin-left-2"/>
+        <img src="./Images/Deceased Nucleus.jpg" alt="Deceased Nucleus" class="card margin-left-2"/>
+        <img src="./Images/Lysosome.jpg" alt="Lysosome" class="card margin-left-2" />
+        <img src="./Images/SmoothER.jpg" alt="Smooth ER" class="card margin-left-2"/>
       </div>
       <div class="cont flex flex-ai-ce w-50 margin-left-0 p-20">
         <div class="flex flex-flx-col txt-right">
@@ -80,6 +80,36 @@
           <p class="txt-info font-desc margin-bot-2">Lysosomes and Smooth ER can save you</p>
           <p class="txt-warning font-desc">Avoid the Dead Nucleus card</p>
           <p class="txt-warning font-desc">No Lysosome = Game Over</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex w-50 margin-top-2 margin-bot-2 bg-lg shadow" data-aos="fade-right">
+    <div class="cont flex flex-ai-ce w-100 margin-left-0 p-20">
+      <div class="flex flex-flx-col">
+        <h3 class="txt-main font-head size-m">How to actually play</h3>
+        <p class="txt-main font-desc margin-top-5 margin-bot-5">Click the Middle card to draw a card</p>
+        <p class="txt-info font-desc margin-bot-2">Rotation is clockwise (Left to Right)</p>
+        <p class="txt-success font-desc">You are unable to use a card when its not your turn</p>
+      </div>
+      <img src="./Images/BackOfCard.jpg" alt="Smooth ER" class="card margin-left-10"/>
+    </div>
+  </div>
+
+  <div class="flex w-100  flex-jc-e " data-aos="fade-left">
+    <div class="flex bg-lg flex-jc-e shadow w-80">
+      <div class="flex p-2 margin-2">
+        <img src="./Images/Golgi Apparatus.jpg" alt="Deceased Nucleus" class="card margin-left-2"/>
+        <img src="./Images/Lysosome.jpg" alt="Lysosome" class="card margin-left-2" />
+        <img src="./Images/RoughER.jpg" alt="Smooth ER" class="card margin-left-2"/>
+      </div>
+      <div class="cont flex flex-ai-ce w-50 p-20">
+        <div class="flex flex-flx-col txt-right">
+          <h3 class="txt-main font-head size-m">GAME TIPS</h3>
+          <p class="txt-main font-desc margin-top-5 margin-bot-5">Collect and Select all your cards, strategize when you want to use it to defeat your enemies</p>
+          <p class="txt-info font-desc margin-bot-2">Only shuffle if you have a Defender Card</p>
+          <p class="txt-warning font-desc">Do not overuse your shuffle and draw</p>
         </div>
       </div>
     </div>
@@ -97,7 +127,7 @@
   <div class="flex w-100 margin-top-5 desc-cont" id="info-cont" data-scroll>
     <div class="flex flex-flx-col flex-jc-ce flex-ai-ce card-info txt-center shadow p-20 margin-right-2">
       <div class="flex">
-        <img src="./Images/Deceased Nucleus.png" alt="Deceased Nucleus" class="margin-bot-5">
+        <img src="./Images/Deceased Nucleus.jpg" alt="Deceased Nucleus" class="margin-bot-5">
       </div>
       <h4 class="font-head size-m margin-bot-2">GAME OVER</h4>
       <p class="font-desc margin-bot-2">The <span class="txt-warning">Deceased Nucleus</span> marks the end of your chances of winning</p>
@@ -106,8 +136,8 @@
 
     <div class="flex flex-flx-col flex-jc-ce flex-ai-ce card-info txt-center shadow p-20 margin-right-2">
       <div class="flex">
-        <img src="./Images/Lysosome.png" alt="Lysosome" class="margin-bot-5">
-        <img src="./Images/SmoothER.png" alt="SmoothER" class="margin-bot-5 margin-left-2">
+        <img src="./Images/Lysosome.jpg" alt="Lysosome" class="margin-bot-5">
+        <img src="./Images/SmoothER.jpg" alt="SmoothER" class="margin-bot-5 margin-left-2">
       </div>
       <h4 class="font-head size-m margin-bot-2">DEFEND</h4>
       <p class="font-desc margin-bot-2">Both the <span class="txt-success">Lysosome</span> and <span class="txt-success">Smooth ER</span> can defend you from the Deceased Nucleus</p>
@@ -116,8 +146,8 @@
 
     <div class="flex flex-flx-col flex-jc-ce flex-ai-ce card-info txt-center shadow p-20 margin-right-2">
       <div class="flex">
-        <img src="./Images/Mitochondria.png" alt="Mitochondria" class="margin-bot-5">
-        <img src="./Images/Cell Membrane.png" alt="Cell Membrane" class="margin-bot-5 margin-left-2">
+        <img src="./Images/Mitochondria.jpg" alt="Mitochondria" class="margin-bot-5">
+        <img src="./Images/Cell Membrane.jpg" alt="Cell Membrane" class="margin-bot-5 margin-left-2">
       </div>
       <h4 class="font-head size-m margin-bot-2">ATTACK</h4>
       <p class="font-desc margin-bot-2"><span class="txt-warning">Mitochondria </span>forces an opponent to draw and increase chance of drawing a nucleus.</p>
@@ -127,8 +157,8 @@
 
     <div class="flex flex-flx-col flex-jc-ce flex-ai-ce card-info txt-center shadow p-20 margin-right-2">
       <div class="flex">
-        <img src="./Images/Ribosome.png" alt="Ribosome" class="margin-bot-5">
-        <img src="./Images/RoughER.png" alt="RoughER" class="margin-bot-5 margin-left-2">
+        <img src="./Images/Ribosome.jpg" alt="Ribosome" class="margin-bot-5">
+        <img src="./Images/RoughER.jpg" alt="RoughER" class="margin-bot-5 margin-left-2">
       </div>
       <h4 class="font-head size-m margin-bot-2">THIEF</h4>
       <p class="font-desc margin-bot-2"><span class="txt-main">Ribosome </span>makes you steal a card from an opponent <span class="txt-info"> requires 2 ribosomes to work </span></p>
@@ -137,22 +167,22 @@
 
     <div class="flex flex-flx-col flex-jc-ce flex-ai-ce card-info txt-center shadow p-20 margin-right-2">
       <div class="flex">
-        <img src="./Images/Cytosol.png" alt="Cytosol" class="margin-bot-5">
+        <img src="./Images/Cytosol.jpg" alt="Cytosol" class="margin-bot-5">
       </div>
       <h4 class="font-head size-m margin-bot-2">SEEK</h4>
-      <p class="font-desc margin-bot-2">The <span class="txt-seek">Cytosol</span> enables user to see through the next 3 cards and set a strategy</p>
+      <p class="font-desc margin-bot-2">The <span class="txt-seek">Cytosol</span> enables user to see through 3 random cards of an opponent</p>
     </div>
 
     <div class="flex flex-flx-col flex-jc-ce flex-ai-ce card-info txt-center shadow p-20 margin-right-2">
       <div class="flex">
-        <img src="./Images/Golgi Apparatus.png" alt="Golgi Apparatus" class="margin-bot-5">
-        <img src="./Images/Centriole.png" alt="Centriole" class="margin-bot-5">
-        <img src="./Images/Cytoskeleton.png" alt="Cytoskeleton" class="margin-bot-5">
+        <img src="./Images/Golgi Apparatus.jpg" alt="Golgi Apparatus" class="margin-bot-5">
+        <img src="./Images/Centriole.jpg" alt="Centriole" class="margin-bot-5">
+        <img src="./Images/Cytoskeleton.jpg" alt="Cytoskeleton" class="margin-bot-5">
       </div>
       <h4 class="font-head size-m margin-bot-2">SHUFFLE</h4>
       <p class="font-desc margin-bot-2"><span class="txt-danger">Golgi Apparatus</span> shuffles the deck and user draws 1 card</p>
       <p class="font-desc margin-bot-2"><span class="txt-danger">Centriole</span> cuts the deck in half, upper and lower half of deck are now switched</p>
-      <p class="font-desc margin-bot-2"><span class="txt-danger">Cytoskeleton</span> makes next user draw 1 and shuffle deck after</p>
+      <p class="font-desc margin-bot-2"><span class="txt-danger">Cytoskeleton</span> Gives a random card to every opponent</p>
     </div>
 
 
@@ -163,25 +193,25 @@
 <section class="flex flex-jc-ce flex-ai-ce margin-top-25" id="ready">
   <button type="button" name="button" class="btn margin-25" id="readyBtn" >READY</button>
   <div class="w-100 flex flex-flx-col flex-ai-ce flex-jc-ce pos-rel max-height margin-top-10" id="board">
-    <img src="./Images/BackOfCard.png" alt="BackOfCard" class="card margin-top-2" id="deck"/>
+    <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="card margin-top-2" id="deck"/>
 
     <div class="user-card flex p-20 flex-jc-ce desc-cont shadow margin-top-2 w-100 max-w max-h overflow-scrollY" id="curUser">
 
     </div>
     <div class="user-card flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-l" id="player2">
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card" />
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card margin-left-2" />
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card margin-left-2" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card margin-left-2" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card margin-left-2" />
     </div>
     <div class="user-card flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-d" id="player3">
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card" />
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card margin-left-2" />
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card margin-left-2" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card margin-left-2" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card margin-left-2" />
     </div>
     <div class="user-card flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-r stuck" id="player4">
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card" />
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card margin-left-2" />
-      <img src="./Images/BackOfCard.png" alt="BackOfCard" class="play-card margin-left-2" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card margin-left-2" />
+      <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card margin-left-2" />
     </div>
       <p class="font-desc flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-r-text not"><span id="ai-3" class="bold"></span></p>
       <p class="font-desc flex p-20 flex-jc-ce desc-cont shadow margin-top-2 pos-abs rot-l-text not"><span id="ai-1" class="bold"></span></p>

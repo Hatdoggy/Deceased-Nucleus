@@ -91,3 +91,6 @@ Thumbs.db
 *.css.map
 *.sass.map
 *.scss.map
+
+# Portable Network Graphics
+*.png
