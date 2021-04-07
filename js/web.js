@@ -15,6 +15,12 @@ $(document).ready(()=>{
         'slow');
   });
 
+  $("#title").click(function() {
+    $('html,body').animate({
+        scrollTop: $("#aboutPart").offset().top},
+        'slow');
+  });
+
   $(how).click(function() {
     $('html,body').animate({
         scrollTop: $("#howto").offset().top},
@@ -46,12 +52,6 @@ $(document).ready(()=>{
 
   $("#burger").click(()=>{
     $("#hide-cont").slideToggle();
-  });
-
-  $(window).click((event)=>{
-    if(event.target==$("#myModal")[0]){
-      console.log(event);
-    }
   });
 
 });
