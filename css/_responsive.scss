@@ -1,9 +1,154 @@
 @import "_variables.scss";
 
+@media (max-width: 1000px) {
+
+  #burger{
+    display:block!important;
+  }
+
+  .hid{
+    display: none!important;
+  }
+
+  #ready{
+    margin-top: 15%!important;
+  }
+
+  #aboutPart{
+    flex-direction: column!important;
+    align-items: center;
+    article{
+      justify-content: center;
+      width: 80%!important;
+      margin-left: 0!important;
+      align-items: center;
+    }
+  }
+  #cardview{
+    margin-top: 2%!important;
+    margin-right: 0!important;
+    div{
+      text-align: center!important;
+    }
+    p:nth-child(1){
+      margin-top: 0!important
+    }
+  }
+
+  #howto{
+    margin-top: 0!important;
+    div{
+      width: 100%!important;
+    }
+  }
+
+  #aboutCards{
+    p{
+      width: 100%!important;
+      margin-top: 2%!important;
+    }
+  }
+}
+
 @media (max-width: 800px) {
+
+  #aboutPart,#howto{
+    .card{
+      width: 60px!important;
+      height: 90px!important;
+    }
+  }
+
+  body{
+    text-align: center!important;
+  }
+
+  #howto{
+    margin-top: 15%!important;
+    padding: 0!important;
+    div:nth-child(4){
+      img{
+        margin-left: 0!important;
+      }
+    }
+    div{
+      align-items: center!important;
+      padding:1%!important;
+      flex-direction: column;
+      text-align: center;
+      padding-top: 2%!important;
+      padding-bottom: 2%!important;
+      p{
+        width: 80%!important;
+      }
+      button{
+        margin-left: 0!important;
+      }
+      .card-disp{
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+  }
+
+  #aboutPart{
+    article:nth-child(1){
+      margin-right: 0!important;
+      margin-bottom: 0!important;
+      width: 75%!important;
+    }
+    article{
+    margin-top: 25%!important
+    }
+    #cardview{
+      margin-top: 5%!important;
+      width: 100%!important;
+    }
+  }
+
+
+    #deck{
+      margin-bottom: 15%;
+    }
+    #ai1,#ai2{
+      top: 10%!important;
+    }
+    #player2{
+      left:60%!important;
+    }
+    #player4{
+      right:60%!important;
+    }
 
 }
 
+@media (max-width:450px) {
+
+  #deck{
+    margin-bottom: 15%;
+    width: 70px;
+    height: 100px;
+  }
+  #ai1,#ai2{
+    top: 10%!important;
+  }
+  #ai3{
+    top: -10%!important;
+  }
+  #player2{
+    left:60%!important;
+  }
+  #player4{
+    right:60%!important;
+  }
+
+  #player2,#player3,#player4{
+    img{
+      width: 40px;
+      height: 65px;
+    }
+  }
+}
 /*
 
  IMPORTANT CHANGE THE FONT SIZE OF TITLE TO SMALLER ONE

@@ -1,7 +1,7 @@
-const about = $("#about");
-const how = $("#htp");
-const overview = $("#overview");
-const play = $("#play");
+const about = $(".about");
+const how = $(".htp");
+const overview = $(".overview");
+const play = $(".play");
 
 $(document).ready(()=>{
 
@@ -39,9 +39,19 @@ $(document).ready(()=>{
     let y = event.originalEvent.deltaY;
     let x = event.originalEvent.deltaX;
     event.preventDefault();
-    target[0].scrollLeft+=y*100;
+    target[0].scrollLeft+=y*50;
   }
 
   $(target).on('wheel', horizontal);
+
+  $("#burger").click(()=>{
+    $("#hide-cont").slideToggle();
+  });
+
+  $(window).click((event)=>{
+    if(event.target==$("#myModal")[0]){
+      console.log(event);
+    }
+  });
 
 });

@@ -355,7 +355,7 @@ const restart = ()=>{
       round=0;
       $("#board").fadeOut("slow");
       $("#readyBtn").show("slow");
-      $("#reset").hide("fast");
+      $(".reset").hide("fast");
       $("#lose").fadeOut("fast");
 };
 
@@ -376,7 +376,7 @@ const win = ()=>{
 const gameOver = (player,cur)=>{
 
   if(user.length!=0&&player==="user"){
-    $("#reset").css("color","#f35230");
+    $(".reset").css("color","#f35230");
     mes(false);
     reset();
   }else{
@@ -642,12 +642,12 @@ info.map((e)=>{
 });
 
 board.hide();
-$("#reset").hide();
+$(".reset").hide();
 ready.click(()=>{
   ready.hide();
   board.fadeIn();
-  $("#reset").fadeIn();
-  $("#reset").click(restart);
+  $(".reset").fadeIn();
+  $(".reset").click(restart);
 });
 
 })

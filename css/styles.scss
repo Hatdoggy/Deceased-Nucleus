@@ -510,9 +510,45 @@ body{
 
 html{
     scrollbar-width:none;
+    ::-webkit-scrollbar{
+      width:5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: $light-g;
+      :horizontal{
+      width: 5px
+      }
+    }
 }
+
+// html::-webkit-scrollbar{
+//   width: none;
+// }
+
 
 #info-cont,#curUser{
   scrollbar-width:thin;
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
+}
+
+#hide-cont{
+  width: 100%;
+  background-color: $light-g;
+  position: absolute;
+  top: 100%;
+  right: 1%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  a{
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+  }
+}
+
+#hide-cont,#burger{
+  display: none;
 }
