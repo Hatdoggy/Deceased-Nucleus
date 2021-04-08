@@ -21,11 +21,11 @@
       justify-content: center;
       width: 80%!important;
       margin-left: 0!important;
+      margin-right: 0!important;
       align-items: center;
     }
   }
   #cardview{
-    margin-top: 2%!important;
     margin-right: 0!important;
     div{
       text-align: center!important;
@@ -122,6 +122,169 @@
 
 }
 
+@media (min-width:1915px){
+
+  h3{
+    font-size: 32px!important;
+  }
+  p{
+    font-size: 24px!important;
+  }
+  h4{
+    font-size: 32px;
+  }
+
+  nav{
+    a{
+      font-size: 24px;
+    }
+    #navi{
+      font-size: 20px!important;
+    }
+    #title{
+      font-size: 32px!important;
+    }
+    #logo{
+      width: 28px!important;
+    }
+  }
+
+  #aboutPart{
+    height: 100vh!important;
+    font-size: 24px;
+    article{
+      .card{
+        height: 250px!important;
+        width: 150px!important;
+      }
+    }
+    #cardview{
+      justify-content: center;
+    }
+  }
+
+  #howto{
+    margin-top: 0!important;
+    button{
+      width: 400px;
+      height: 50px;
+      font-size: 18px;
+    }
+    .card{
+      width: 180px!important;
+      height: 250px!important;
+    }
+  }
+
+  #aboutCards{
+
+    .card-info{
+      height: 500px;
+      width: 400px;
+      img{
+        width: 140px!important;
+        height: 210px!important;
+      }
+    }
+  }
+
+  #ready{
+    margin-top: 5%!important;
+    #readyBtn{
+      font-size: 20px!important;
+    }
+    #deck{
+      margin-bottom: 5%!important;
+      width: 200px!important;
+      height: 280px!important;
+    }
+    #player2,#player3,#player4{
+      img{
+        width: 100px!important;
+        height: 130px!important;
+      }
+      max-width: none!important;
+    }
+    #curUser{
+      max-height: 200px!important;
+      max-width: 450px!important;
+      .play-card{
+        width: 100px!important;
+        height: 130px!important;
+      }
+    }
+  }
+}
+
+@media (min-width:2560px) {
+
+  h1{
+    font-size: 54px!important;
+  }
+
+  #aboutPart{
+    height: 100vh!important;
+
+    article{
+      .card{
+        height: 350px!important;
+        width: 210px!important;
+      }
+    }
+    #cardview{
+      justify-content: center;
+    }
+  }
+
+  #howto{
+    div.change{
+      div.bg-lg{
+        justify-content: end;
+        width: 50%!important;
+      }
+    }
+    div.left{
+      .btn{
+        margin-left: 0!important;
+        margin-right: 5%;
+      }
+      div{
+        justify-content: start;
+        img{
+          margin-left: 25%!important;
+        }
+      }
+    }
+  }
+
+  #aboutCards{
+    margin-top: 20%!important;
+  }
+
+  #ready{
+    margin-top: 10%!important;
+    p{
+      font-size: 32px!important;
+    }
+  }
+
+  .rot-l,p.rot-l-text{
+    left:30%!important;
+  }
+
+  .rot-r,p.rot-r-text{
+    right: 30%!important;
+  }
+
+  .rot-d{
+    top: 10%!important;
+  }
+  p.rot-d-text{
+    top:5%!important;
+  }
+
+}
+
 @media (max-width:450px) {
 
   #deck{
@@ -149,34 +312,3 @@
     }
   }
 }
-/*
-
- IMPORTANT CHANGE THE FONT SIZE OF TITLE TO SMALLER ONE
-
-//Card overview:
-flex-direction:column;
-
-justify-content: center;
-width: 80%;
-align-items: center;
-margin-top: 15% !important;
-
-//About the Game
-
-text-align: center;
-justify-content: center;
-align-items: center;
-
-2nd div inside this:
-margin-top:0;
-
-//How to play
-
-width:100%!important;
-
-//container with cards
-flex-direction:column
-//cards:
-  justify-content:center
-
-*/
