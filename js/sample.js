@@ -3,6 +3,19 @@ const info = ["./Images/SmoothER.jpg","./Images/Lysosome.jpg","./Images/Golgi Ap
 
 export default info;
 
+const desc = {
+  SmoothER:"Protects you from the deceased nucleus",
+  Lysosome:"Protects you from the deceased nucleus",
+  Mitochondria:"Choose an opponent and give them 2 cards",
+  RoughER:"Draws one card from the bottom of the deck",
+  CellMembrane:"blocks an opponent from drawing a card",
+  Cytosol:"enables user to see through 3 random cards of an opponent",
+  Cytoskeleton:"Gives a random card to every opponent",
+  GolgiApparatus:"shuffles the deck and user draws 1 card",
+  Centriole:"cuts the deck in half",
+  Ribosome:"Requires two to steal"
+};
+
 const deck = $("#deck");
 const players = ["player2","player3","player4"];
 
@@ -29,7 +42,6 @@ const remove = (player,get,card)=>{
       let checkVal = get(val)[0];
       return checkVal === card
     });
-  console.log(sample);
   return sample;
 }
 
@@ -104,7 +116,6 @@ function Cytoskeleton (targets,check,gen,ai,cur,user){
 }
 
 function GolgiApparatus (user,get,callback){
-  console.log(user);
   shuffle();
   callback(remove(user,get,"Golgi Apparatus"));
   // return remove(user,get,"GolgiApparatus");
@@ -125,7 +136,6 @@ const ribo = (user) =>{
       ctr++;
     }
   });
-  console.log(ctr);
   return(ctr>=2)?riboArr:false;
 };
 
@@ -207,11 +217,15 @@ function roughDisplay(user){
       user.map((e)=>{
         let alt = e.split("/");
         alt = alt[2].split(".");
+        let id = alt[0].replace(/\s+/g, '');
         $("#curUser").append(`
           <div class="">
-            <img src="${e}" alt="${alt[0]}" class="flex play-card p-right-5 p-bot-5" />
+            <img src="${e}" alt="${alt[0]}" id="${id}" class="flex play-card p-right-5 p-bot-5" />
           </div>
       `);
+      tippy('#'+id, {
+        content: desc[id],
+      });
   });
 }
 
@@ -229,4 +243,6 @@ function cytoDisp(arr){
 }
 
 
-export {shuffle,cytoDisp,ribo,remove,Cystosol,Ribosome,GolgiApparatus,Mitochondria,cut,CellMembrane,Cytoskeleton,roughDisplay};
+
+
+export {shuffle,cytoDisp,ribo,remove,Cystosol,Ribosome,GolgiApparatus,Mitochondria,cut,CellMembrane,Cytoskeleton,roughDisplay,desc};

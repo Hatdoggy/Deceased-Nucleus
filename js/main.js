@@ -1,4 +1,4 @@
-import info,* as func  from "./sample.js"
+import info,* as func  from "./sample.js";
 
 $(document).ready(()=>{
 const ready = $("#readyBtn");
@@ -125,7 +125,6 @@ const handler = (clicked,targets,curPlayer)=>{
         }else{
           ndx=func.remove(curPlayer,get,"Mitochondria");
           curPlayer.splice(ndx,1);
-          console.log(curPlayer);
           mit.play();
           func.Mitochondria(targets,curPlayer,ai,ret,false);
         }
@@ -220,7 +219,7 @@ const handler = (clicked,targets,curPlayer)=>{
             });
 
           }else{
-            console.log("NO");//set error or notify user nga kuwang
+            console.log("Lack one more ribosome");//set error or notify user nga kuwang
           }
          break;
     case "Cytosol":
@@ -242,7 +241,7 @@ const handler = (clicked,targets,curPlayer)=>{
           }
          break;
     default:
-        console.log("Error Detected");
+        console.log("Used a Defense card");
   }
 };
 
@@ -253,6 +252,7 @@ $(".close").click(()=>{
 });
 
 const sample = ()=>{
+
   if(userBlock){
     turnDelay();
   }else{
@@ -264,15 +264,21 @@ const sample = ()=>{
 }
 
 const display = (value)=>{
+
+
   if($("#curUser").children().length === 0){
     user.map((e)=>{
       let alt = e.split("/");
       alt = alt[2].split(".");
+      let id = alt[0].replace(/\s+/g, '');
       $("#curUser").append(`
         <div class="">
-          <img src="${e}" alt="${alt[0]}" class="flex play-card p-right-5 p-bot-5" />
+          <img src="${e}" alt="${alt[0]}" id="${id}" class="tooltip flex play-card p-right-5 p-bot-5" />
         </div>
       `);
+      tippy('#'+id, {
+        content: func.desc[id],
+      });
     });
     sample();
   }
@@ -281,15 +287,21 @@ const display = (value)=>{
     user.map((e)=>{
       let alt = e.split("/");
       alt = alt[2].split(".");
+      let id = alt[0].replace(/\s+/g, '');
       $("#curUser").append(`
         <div class="">
-          <img src="${e}" alt="${alt[0]}" class="flex play-card p-right-5 p-bot-5" />
+          <img src="${e}" alt="${alt[0]}" id="${id}" class="tooltip flex play-card p-right-5 p-bot-5 cur-card" />
         </div>
       `);
+      tippy('#'+id, {
+        content: func.desc[id],
+      });
     });
     sample();
   }
+
 }
+
 
 const generate = (player)=>{
   let d = Math.random();
@@ -343,6 +355,7 @@ const restart = ()=>{
         two:false,
         three:false
       }
+      $("movecont").empty();
       $("#message").empty();
       $("#deck").attr("src","./Images/BackOfCard.jpg");
       $("#curUser").empty();
@@ -429,7 +442,7 @@ const upd = (player)=>{
           $("#ai-3").html(ai.three.length);
         break;
       default:
-          console.log("None");
+          console.log("user");
     }
   }
 
@@ -545,7 +558,6 @@ const turnDelay = ()=>{
     },850);
     $("#deck").click(draw);
   }
-
 }
 
 const draw = ()=>{
@@ -563,6 +575,7 @@ const draw = ()=>{
       $("#ai-3").show();
     upd();
     playAgain = false;
+    $("#movecont").children().empty();
   }
 
   if(round===0){
@@ -616,6 +629,33 @@ const who = (player)=>{
   return retArr;
 }
 
+/*Identifies which opponent is playing*/
+const identify = (player,card)=>{
+  let set;
+  $("#movecont").empty();
+  switch (player) {
+    case ai.one:
+      set = '#player2'
+      break;
+    case ai.two:
+      set = '#player3'
+      break;
+    case ai.three:
+      set = '#player4'
+      break;
+    default:
+      console.log("unknown");
+  }
+  if(round>1){
+    tippy(set,{
+      content:"Last card used: "+ card,
+    });
+  }else{
+    console.log("you went here");
+    set.setContent("Last card used: "+ card);
+  }
+}
+
 const turn = (player)=>{
   //get random card from ai deck
   //get the name of the card using get()
@@ -627,7 +667,7 @@ const turn = (player)=>{
       let card = get(use);//breaks down
       card = card[0].replace(/\s+/g, '');
       handler(card,who(player),player);
-      // i tang tang ang space sa card[0] boi
+      identify(player,card);
     }
   }
 }
