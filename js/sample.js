@@ -3,6 +3,8 @@ const info = ["./Images/SmoothER.jpg","./Images/Lysosome.jpg","./Images/Golgi Ap
 
 export default info;
 
+/*contains all description of every type of card*/
+
 const desc = {
   SmoothER:"Protects you from the deceased nucleus",
   Lysosome:"Protects you from the deceased nucleus",
@@ -19,6 +21,8 @@ const desc = {
 const deck = $("#deck");
 const players = ["player2","player3","player4"];
 
+/*shuffle() shuffles card by running gif*/
+
 const shuffle = ()=>{
 
   return new Promise((x)=>{
@@ -29,13 +33,15 @@ const shuffle = ()=>{
   });
 
 };
-
+/*cut() cuts deck by triggering gif*/
 const cut = ()=>{
     $("#deck").attr("src","./Images/Cut.gif");
     setTimeout(()=>{
       $("#deck").attr("src","./Images/BackOfCard.jpg");
     },2500);
 };
+
+/*remove() locates card from array and returns index*/
 
 const remove = (player,get,card)=>{
     let sample = player.findIndex((val)=>{
@@ -45,15 +51,17 @@ const remove = (player,get,card)=>{
   return sample;
 }
 
+/*Mitochondria() changes box-shadow of target and  updates changes of ret*/
+
 function Mitochondria (targets,user,ai,ret,player){
 
   $("#deck").attr("src","./Images/Mitochondria.jpg");
-  if(player){//check if user ang click
+  if(player){//check if user clicked
     targets.map((key,value)=>{
       if(key!=0&&!($(value).hasClass("not"))){
         $(value).css("box-shadow","1px 9px 34px -10px rgba(240,166,48,0.8) ");
         $(value).css("cursor","pointer");
-        $(value).click(function(){
+        $(value).off().on('click',function(){
           $(value).siblings().css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
           $(value).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
           ret.testVar = $(this).attr("id");
@@ -72,19 +80,19 @@ function Mitochondria (targets,user,ai,ret,player){
   }
 }
 
+/*CellMembrane() changes box-shadow for blocked player*/
+
 function CellMembrane (target,block,player){
 
     if(block){
       $(target).css("box-shadow","1px 9px 34px -10px rgba(255,204,0,0.52)");
     }
-  //when chosen next player will be blocked
-  //click card set block to true
-  // on draw next player shadow will turn orange then proceed to next next
 
 }
 
+/*Cytoskeleton() generates random number for every opponent*/
 function Cytoskeleton (targets,check,gen,ai,cur,user){
-  //generate random cards for every opponent
+
   let ctr = 0;
   for (let x of targets) {
     if($(x).attr("id")!="deck"&&!($(x).hasClass("not"))){
@@ -93,11 +101,11 @@ function Cytoskeleton (targets,check,gen,ai,cur,user){
   }
 
   if(cur === "user"){
-    for (let x in ai) {
+    for (let x in ai) {//generate a card for every ai opponent
       check(gen(players[ctr]),ai[x]);
       ctr++;
     }
-  }else{
+  }else{//generate a card for every ai opponent except for current player including player
     for (let x in ai) {
       if(cur!=ai[x]){
         check(gen(players[ctr]),ai[x]);
@@ -115,17 +123,22 @@ function Cytoskeleton (targets,check,gen,ai,cur,user){
 
 }
 
+/*GolgiApparatus() shuffles deck and triggers callback*/
+
 function GolgiApparatus (user,get,callback){
   shuffle();
   callback(remove(user,get,"Golgi Apparatus"));
-  // return remove(user,get,"GolgiApparatus");
 }
+
+/* breakdown() splits passed parameter and returns split value*/
 
 const breakdown = (cur)=>{
     cur=cur.split("/");
     cur=cur[2].split(".");
     return cur[0]
 }
+
+/*ribo() checks if number of ribosome in deck is 2 or more*/
 
 const ribo = (user) =>{
   let ctr =0;
@@ -149,13 +162,13 @@ let ret = {
     }
   }
 
+/*removeClick() removes click for deck*/
+
 const removeClick = (event,target,callback)=>{
 
   if($(event).attr("alt")=="BackOfCard"){
-    // ret.testVar = $(event).parent().attr("id");
     callback($(event).parent().attr("id"));
   }else{
-    // ret.testVar = $(event).attr("id");
     callback($(event).attr("id"));
   }
 
@@ -166,6 +179,10 @@ const removeClick = (event,target,callback)=>{
     }
   }
 }
+
+/*Ribosome() called when card used is a ribosome. changes box-shadow to white to identify possible targets
+  calls the callback function
+*/
 
 function Ribosome (targets,cur,user,callback){
   let curPlayer;
@@ -183,7 +200,7 @@ function Ribosome (targets,cur,user,callback){
       $(x).css("cursor","pointer");
       $(x).css("box-shadow","1px 9px 34px -10px rgba(254,254,254,0.52)");
       if(cur===user){
-        $(x).click((event)=>{
+        $(x).off().on('click',(event)=>{
           $(targets).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
           removeClick(event.target,targets,callback);
         });
@@ -197,13 +214,15 @@ function Ribosome (targets,cur,user,callback){
   }
 }
 
+/*Cytosol() changes box-shadows to identify available targets*/
+
 function Cystosol (targets,callBack){
   //click opponent show three random cards from his deck
   for (let x of targets) {
     if($(x).attr("id")!="deck"&&!($(x).hasClass("not"))){
       $(x).css("cursor","pointer");
       $(x).css("box-shadow","1px 9px 34px -10px rgba(234,112,250,0.52)");
-      $(x).click((event)=>{
+      $(x).off().on('click',(event)=>{
         $(targets).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
         removeClick(event.target,targets,callBack);
       });
@@ -211,6 +230,8 @@ function Cystosol (targets,callBack){
   }
 
 }
+
+/*roughDisplay() displays user's cards after handler function*/
 
 function roughDisplay(user){
     $("#curUser").empty();
@@ -229,6 +250,8 @@ function roughDisplay(user){
   });
 }
 
+/*cytoDisp() displays the random cards generated from cytoSee() */
+
 function cytoDisp(arr){
 
   arr.forEach((item) => {
@@ -241,8 +264,5 @@ function cytoDisp(arr){
     `);
   });
 }
-
-
-
 
 export {shuffle,cytoDisp,ribo,remove,Cystosol,Ribosome,GolgiApparatus,Mitochondria,cut,CellMembrane,Cytoskeleton,roughDisplay,desc};

@@ -20,6 +20,14 @@ let defeat = {
   two:false,
   three:false
 };
+let players = ["player2","player3","player4"];
+let curUse = "#curUser";
+
+let instance = tippy(curUse,{
+  trigger:"manual",
+  placement: 'bottom',
+  duration:300,
+});
 
 const suc = new Audio('https://dl.dropbox.com/s/05oyx1mvawozwdj/Win.wav');
 const def = new Audio('https://dl.dropbox.com/s/c85w733ud3rxxna/Lost.wav');
@@ -29,12 +37,15 @@ const mit = new Audio('https://dl.dropbox.com/s/jmvt8udz5otuk7b/Mito.mp3');
 const ran = new Audio('https://dl.dropbox.com/s/fktip0t46fwfs55/Random.mp3');
 const rib = new Audio('https://dl.dropbox.com/s/lufn8q5xjndz3g7/ribo.mp3');
 
+/*ret handles mitochondria changes*/
 
 let ret = {
     value: '',
+
     get testVar() {
       return this.value;
     },
+
     set testVar(value) {
       console.log("You went here");
       $("div .user-card").css("cursor","default");
@@ -43,6 +54,8 @@ let ret = {
         check(generate("user"),user);
         check(generate("user"),user);
         display();
+        instance[0].show();
+        instance[0].setContent("2 from a Mitochondria");
       }else if($(this)[0].value === "player2"){
         check(generate("player2"),ai.one);
         check(generate("player2"),ai.one);
@@ -56,6 +69,8 @@ let ret = {
       upd();
     }
   }
+
+/*checkPlayer() identifies the target player, used by ribosome handler*/
 
 const checkPlayer = (player,cur)=>{
   let find;
@@ -80,9 +95,13 @@ const checkPlayer = (player,cur)=>{
     sample();
 }
 
+/*gets a random number*/
+
 const getRandom = (length)=>{
   return Math.floor(Math.random()*(length));
 }
+
+/*cytoSee() creates an array of random cards from target player and displays it using cytoDisp()*/
 
 const cytoSee = (target,targets,modal)=>{
  let arr = [];
@@ -108,12 +127,14 @@ const cytoSee = (target,targets,modal)=>{
 
 };
 
+/* handler() identifies what card is used and activates the cards effects*/
+
 const handler = (clicked,targets,curPlayer)=>{
   clicked = clicked.replace(/\s+/g, '');
+  $("#deck").off("click");
   switch (clicked) {
     case "Mitochondria":
         let ndx;
-        $("#deck").unbind();
         if (curPlayer === user) {
           ndx=func.remove(user,get,"Mitochondria");
             if(ndx!=-1){
@@ -128,11 +149,9 @@ const handler = (clicked,targets,curPlayer)=>{
           mit.play();
           func.Mitochondria(targets,curPlayer,ai,ret,false);
         }
-        $("#deck").click(draw);
+        $("#deck").off().on('click',draw);
          break;
     case "Centriole":
-          console.log("Centriole");
-          $("#deck").unbind();
           curPlayer.splice(func.remove(curPlayer,get,"Centriole"),1);
           ran.play();
           func.cut();
@@ -140,42 +159,44 @@ const handler = (clicked,targets,curPlayer)=>{
             func.roughDisplay(user);
             sample();
           }
-          $("#deck").click(draw);
+        $("#deck").off().on('click',draw);
          break;
     case "CellMembrane":
           console.log("Cell Membrane");
-          $("#deck").unbind();
           if(curPlayer===user){
             block = true;
             user.splice(func.remove(user,get,"Cell Membrane"),1);
             func.roughDisplay(user);
             sample();
             func.CellMembrane($("#player2"),block,"user");
+            $("#deck").off().on('click',draw);
           }else if(curPlayer===ai.three){
             userBlock = true;
             curPlayer.splice(func.remove(curPlayer,get,"Cell Membrane"),1);
             func.CellMembrane(curUser,userBlock,curPlayer);
             $(curUser).children().unbind();
+            instance[0].show();
+            instance[0].setContent("Blocked by a Cell Membrane");
           }
-         $("#deck").click(draw);
+        $("#deck").off().on('click',draw);
          break;
     case "Cytoskeleton":
-          $("#deck").unbind();
           curPlayer.splice(func.remove(curPlayer,get,"Cytoskeleton"),1);
           cyt.play();
           if(curPlayer==user){
             func.Cytoskeleton(targets,check,generate,ai,"user");
           }else{
             func.Cytoskeleton(targets,check,generate,ai,curPlayer,user);
+            instance[0].show();
+            instance[0].setContent("Oh no a random card");
           }
           func.roughDisplay(user);
           sample();
           upd();
-          $("#deck").click(draw);
+          $("#deck").off().on('click',draw);
           break;
     case "GolgiApparatus"://RECHECK THIS
           console.log("Golgi");
-          $("#deck").unbind();
             func.GolgiApparatus(curPlayer,get,function(retVal){
               ran.play();
               curPlayer.splice(retVal,1);
@@ -185,48 +206,45 @@ const handler = (clicked,targets,curPlayer)=>{
                 func.roughDisplay(user);
                 sample();
               }
-
-              $("#deck").click(draw);
             });
+        $("#deck").off().on('click',draw);
          break;
     case "RoughER":
           console.log("Rough");
-          $("#deck").unbind();
           curPlayer.splice(func.remove(curPlayer,get,"RoughER"),1);
           check(generate("curPlayer"),curPlayer);
               if(curPlayer===user){
                 func.roughDisplay(user);
                 sample();
               }
-          $("#deck").click(draw);
+          $("#deck").off().on('click',draw);
          break;
     case "Ribosome":
           if(Array.isArray(func.ribo(curPlayer))){
           rib.play();
-          $("#deck").unbind();
             for(let x=0;x<2;x++){
               curPlayer.splice(func.remove(curPlayer,get,"Ribosome"),1);
             }
               if(curPlayer===user){
                 func.roughDisplay(user);
                 sample();
+                $("#deck").off().on('click',draw);
+              }else{
+                instance[0].show();
+                instance[0].setContent("A thief took a card");
               }
             func.Ribosome(targets,curPlayer,user,function(find){
-              console.log("Check this: "+find);
               checkPlayer(find,curPlayer);
-              $("#deck").click(draw);
               upd();
             });
-
+        $("#deck").off().on('click',draw);
           }else{
-            console.log("Lack one more ribosome");//set error or notify user nga kuwang
+            console.log("Lack one more ribosome");
           }
          break;
     case "Cytosol":
 
           if(curPlayer===user){
-            $("#deck").unbind();
-
             user.splice(func.remove(user,get,"Cytosol"),1);
             func.Cystosol(targets,function(target){
               cytoSee(target,targets,()=>{
@@ -237,7 +255,7 @@ const handler = (clicked,targets,curPlayer)=>{
             });
             func.roughDisplay(user);
             sample();
-            $("#deck").click(draw);
+            $("#deck").off().on('click',draw);
           }
          break;
     default:
@@ -245,26 +263,35 @@ const handler = (clicked,targets,curPlayer)=>{
   }
 };
 
+/*Modal exit button*/
+
 $(".close").click(()=>{
   playAgain?$("#lose").fadeOut("fast"):$("#myModal").fadeOut("fast");
   $("#card-cont").empty();
   $("#message").empty();
 });
 
-const sample = ()=>{
+/* sample() identifies if user is blocked or not
+  If user is blocked user cant click their card
+  else click event is set to the cards
+*/
 
+const sample = ()=>{
+  console.log("You went here");
   if(userBlock){
-    turnDelay();
+    turnDelay(0);
   }else{
-    $("#curUser").children().click((e)=>{
+    $("#curUser").children().off().on('click',(e)=>{
+      console.log("You clicked: "+ $(e.target).attr("alt"));
       let siblings = $(e.target).parent().parent().siblings();
       handler($(e.target).attr("alt"),siblings,user);
     });
   }
 }
 
-const display = (value)=>{
+/* display() displays the user's cards after drawing or after other opponents attack*/
 
+const display = (value)=>{
 
   if($("#curUser").children().length === 0){
     user.map((e)=>{
@@ -302,6 +329,7 @@ const display = (value)=>{
 
 }
 
+/* generate() generates a random number and returns an index value for that card*/
 
 const generate = (player)=>{
   let d = Math.random();
@@ -314,7 +342,16 @@ const generate = (player)=>{
   return ret;
 }
 
+/* reset() resets the game*/
+
 const reset = ()=>{
+
+    players.forEach((item) => {
+      tippy("#"+item,{
+        content:" ",
+      });
+    });
+    $("#deck").off().on('click',draw);
     user = [];
     ai = {
       one:[],
@@ -332,6 +369,8 @@ const reset = ()=>{
 
 let end = false;
 
+/*Displays Win message if res is true and Lost if res if false*/
+
 const mes = (res)=>{
   if(!end){
     $("#lose").fadeIn("fast");
@@ -342,6 +381,24 @@ const mes = (res)=>{
   }
 }
 
+/*refill() resets the cards of every defeated opponent*/
+
+const refill = ()=>{
+
+  let targPlayers = ["#player2","#player3","#player4"];
+
+  targPlayers.forEach((item) => {
+    $(item).empty();
+    for (var i = 0; i < 3; i++) {
+      $(item).append(`
+        <img src="./Images/BackOfCard.jpg" alt="BackOfCard" class="play-card margin-left-2" />
+      `);
+    }
+  });
+
+}
+
+/*Restarts the whole game, triggers when reset game is clicked*/
 const restart = ()=>{
 
       user = [];
@@ -370,8 +427,10 @@ const restart = ()=>{
       $("#readyBtn").show("slow");
       $(".reset").hide("fast");
       $("#lose").fadeOut("fast");
+      refill();
 };
 
+/*checks if user won*/
 const win = ()=>{
   let x=0;
   for (const [key, value] of Object.entries(defeat)) {
@@ -384,9 +443,11 @@ const win = ()=>{
   }
 }
 
-/*gameOver() displays the game over modal when game is over*/
+/*Sets defeat true if ai lost and checks if user won and identifies if user lost then calls reset()*/
 
 const gameOver = (player,cur)=>{
+
+  let defeated,lost,target;
 
   if(user.length!=0&&player==="user"){
     $(".reset").css("color","#f35230");
@@ -396,33 +457,39 @@ const gameOver = (player,cur)=>{
     switch (cur) {
       case ai.one:
         defeat.one=true;
-        ai.one=[];
-        upd(ai.one);
-        $("#ai-1").text("LOST");
-        $("#ai-1").hide("slow");
+        defeated = ai.one;
+        target="#player2";
+        lost = "#ai-1";
         break;
       case ai.two:
         defeat.two=true;
-        ai.two=[];
-        upd(ai.two);
-        $("#ai-2").text("LOST");
-        $("#ai-2").hide("slow");
+        defeated = ai.one;
+        target="#player3";
+        lost = "#ai-2";
         break;
       case ai.three:
         defeat.three=true;
-        ai.three=[];
-        upd(ai.three);
-        $("#ai-3").text("LOST");
-        $("#ai-3").hide("slow");
+        defeated = ai.one;
+        target="#player4";
+        lost = "#ai-3";
         break;
       default:
         console.log("Not found");
     }
-    win();
+
+    defeated=[];
+    upd(defeated);
+
+    setTimeout(()=>{
+      $(target).empty();
+      $(target).append(`<h4 class="font-desc">DEFEATED</h4>`);
+      $(lost).hide("slow");
+    },2000);
+    win();//checks if every opponent lost
   }
 }
 
-/* upd() is a function that updates the current card count of each other player*/
+/* upd() is a function that updates and displays the current card count of each other player*/
 
 const upd = (player)=>{
 
@@ -448,13 +515,20 @@ const upd = (player)=>{
 
 }
 
-const decNucleus = (stat,def,cur)=>{
+/*decNucleus() displays a deceased nucleus card in the middle if deceased nucleus is drawn*/
+
+const decNucleus = (stat,def,cur,curP)=>{
+
   if(user.length!=0){
     if(stat == false){
       nuc.play();
       $("#deck").attr("src","./Images/Deceased Nucleus.jpg");
     }else{
     cur.splice(def,1);
+      if(curP==="user"){
+        console.log("YOU GOT A DECEASED NUCLEUS");
+        console.log(user);
+      }
       setTimeout(()=>{
         $("#deck").attr("src","./Images/BackOfCard.jpg");
       },1500);
@@ -462,10 +536,15 @@ const decNucleus = (stat,def,cur)=>{
   }
 }
 
+/*Gets the string for the card used by splitting the card src*/
+
 const get =(val)=>{
   let y = val.split("/");
   return y[2].split(".");
 };
+
+/*check() checks if generated card is a deceased nucleus or not and checks if player has Defense
+  else pushes the card to players deck*/
 
 const check = (e,player)=>{
   let cur = (player === user?"user":"AI");
@@ -475,7 +554,7 @@ const check = (e,player)=>{
       let checkVal = get(val)[0];
       return(checkVal === "Lysosome" || checkVal === "SmoothER")
     });
-    sample!=-1?decNucleus(true,sample,player):gameOver(cur,player);
+    sample!=-1?decNucleus(true,sample,player,cur):gameOver(cur,player);
     upd(player);
   }else{
     player.push(info[e]);
@@ -492,9 +571,13 @@ const first = ()=>{
   ai.three.push(info[1]);
 }
 
+/*cur() highlights current playing opponent*/
+
 const cur = (player)=>{
   (playAgain===false)&&$(player).css("box-shadow","1px 9px 34px -10px rgba(99,255,51,0.8) ");
 }
+
+/*res() resets the box-shadow of player after turn*/
 
 const res = (player)=>{
   $(player).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52) ");
@@ -506,59 +589,67 @@ const back = ()=>{
   upd();
 }
 
-const turnDelay = ()=>{
+/*turnDelay() is the delay per turn for every opponent*/
+
+const turnDelay = (ctr)=>{
   //set delay per turn
   //box shadow is green for current player
   //wait for current player to finish
+  if(ctr<players.length&&user.length!=0){
 
-  if(!playAgain){
+    let curP = players[ctr];
+    let def;
+    let curAI;
+
+    switch (curP) {
+      case "player2":
+        $("#deck").unbind();
+        $("#curUser").children().unbind();
+        curAI = ai.one;
+        if(userBlock){
+          userBlock=false;
+          $(curUser).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52)");
+        }
+          def = defeat.one;
+        break;
+      case "player3":
+          curAI = ai.two;
+          def = defeat.two;
+        break;
+      case "player4":
+          curAI = ai.three;
+          def = defeat.three;
+        break;
+      default:
+        console.log("End");
+    }
+
+    if(!block&&!def){
+      cur($("#"+players[ctr]));
+      check(generate(players[ctr]),curAI);
+      turn(curAI);
+    }else{
+      block = false;
+      defeat&&$("#"+players[ctr]).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
+    }
+
     setTimeout(()=>{
-      if(userBlock){
-        userBlock=false;
-        $(curUser).css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.52)");
-      }
-      $("#deck").unbind();
-      $("#curUser").children().unbind();
-      if(!block&&!defeat.one){
-        cur($("#player2"));
-        check(generate("player2"),ai.one);
-        turn(ai.one);
-      }else{
-        block = false;
-        defeat.one&&$("#player-2").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
-      }
-      setTimeout(()=>{
-        res($("#player2"));
-          if(!defeat.two){
-          cur($("#player3"));
-          check(generate("player3"),ai.two);
-          turn(ai.two);
-          }else{
-            block = false;
-            defeat.two&&$("#player-3").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
-          }
-            setTimeout(()=>{
-              res($("#player3"));
-              if(!defeat.three){
-              cur($("#player4"));
-              check(generate("player4"),ai.three);
-                turn(ai.three);
-                }else{
-                  block = false;
-                  defeat.three&&$("#player-4").css("box-shadow","1px 9px 34px -10px rgba(0,0,0,0.8)");
-              }
-                setTimeout(()=>{
-                  res($("#player4"));
-                  sample();
-                  $("#deck").click(draw);
-                  block=false;
-                  },850);
-              },850);
-            },850);
-    },850);
-    $("#deck").click(draw);
+      res($("#"+players[ctr]));
+      ctr++;
+      turnDelay(ctr);
+    },1500);
+
+  }else{
+    sample();
+    instance[0].setContent(" ");
+    instance[0].hide();
+    $("#deck").off().on('click',draw);
+    block=false;
   }
+
 }
+
+/*draw() triggered when user clicks middle deck generates card*/
 
 const draw = ()=>{
 
@@ -593,16 +684,18 @@ const draw = ()=>{
     check(generate("user"),user);
     display(user[user.length-1]);
     if(block === false){
-      turnDelay();
+      turnDelay(0);
     }else{
       setTimeout(()=>{
-        turnDelay();
+        turnDelay(0);
         func.CellMembrane($("#player2"),block);
       },1000);
     }
     round++;
   }
 };
+
+/*who() identifies the current player and adds a tooltip on last card chosen to that user */
 
 const who = (player)=>{
   let ret;
@@ -620,18 +713,24 @@ const who = (player)=>{
     default:
       console.log("None");
   }
-  for (let div of ret) {
-    let x =$(div).attr("id");
-    if(x!="deck"&&!($(div).hasClass("not"))){
-      retArr.push(div);
+  if(typeof ret != "undefined"){
+    for (let div of ret) {
+      let x =$(div).attr("id");
+      if(x!="deck"&&!($(div).hasClass("not"))){
+        retArr.push(div);
+      }
     }
   }
   return retArr;
 }
 
-/*Identifies which opponent is playing*/
+/*identify() identifies which opponent is playing*/
+let ins;
+
 const identify = (player,card)=>{
+
   let set;
+
   $("#movecont").empty();
   switch (player) {
     case ai.one:
@@ -644,17 +743,21 @@ const identify = (player,card)=>{
       set = '#player4'
       break;
     default:
+      set="unknown";
       console.log("unknown");
   }
-  if(round>1){
-    tippy(set,{
+  if((set!="unknown")&&(round<=2)){
+    ins = tippy(set,{
       content:"Last card used: "+ card,
     });
   }else{
-    console.log("you went here");
-    set.setContent("Last card used: "+ card);
+    ins[0].setContent(" ");
+    ins[0].setContent("Last card used: "+ card);
   }
 }
+
+// console.log(instance[0].show());
+/*turn() triggered when ai's turn*/
 
 const turn = (player)=>{
   //get random card from ai deck
@@ -673,7 +776,7 @@ const turn = (player)=>{
 }
 
 $("#readyBtn").click(draw);
-$("#deck").click(draw);
+$("#deck").off().on('click',draw);
 
 info.map((e)=>{
   cardCont.append(`
@@ -687,7 +790,7 @@ ready.click(()=>{
   ready.hide();
   board.fadeIn();
   $(".reset").fadeIn();
-  $(".reset").click(restart);
+  $(".reset").off().on('click',restart);
 });
 
 })
